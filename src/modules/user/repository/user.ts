@@ -1,6 +1,7 @@
 import { database } from "../../../shared/database/connection";
 import UserModel from "../model/model";
 import { ICreateUserDTO } from "./ICreateUserDTO";
+import { ILoginnUserDTO } from "./ILoginUserDTO";
 import { IUserRepository } from "./IUserRepository";
 import { DataType, UpdatedAt } from "sequelize-typescript";
 
@@ -37,8 +38,10 @@ export class UserRepository implements IUserRepository {
     }
 
     public async create(userData: ICreateUserDTO): Promise<UserModel> {
-        const res = this.userRepository.create(userData);
-        console.log(res);
-        return res;
+        return this.userRepository.create(userData);
+    }
+
+    public async login(credentials: ILoginnUserDTO) : Promise<UserModel | null> {
+        return this.userRepository.findOne({ where: { email: credentials.email, password: credentials.password } });
     }
 }
