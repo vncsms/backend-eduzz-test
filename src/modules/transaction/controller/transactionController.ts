@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { DetailedError } from "../../error/model/model";
 import { container } from "tsyringe";
 import { createTransactionValidation } from "../validation/transaction";
-import { CreateTransaction } from "../services/createTransaction";
+import { CreateTransaction } from "../services/CreateTransaction";
 import { transactionSerializer } from "../serializer";
 
 export default class TransactionController {
