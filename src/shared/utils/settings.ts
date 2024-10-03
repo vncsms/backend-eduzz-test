@@ -1,1 +1,1 @@
-export const { STAGE, SERVER_PORT } = process.env;
+export const { STAGE, SERVER_PORT, JWT_KEY } = process.env;
