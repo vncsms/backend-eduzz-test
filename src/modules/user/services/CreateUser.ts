@@ -16,3 +16,4 @@ export class CreateUser {
         return this.userRepository.create({nome, password, email})
     }
 }
+
