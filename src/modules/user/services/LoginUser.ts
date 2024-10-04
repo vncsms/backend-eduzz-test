@@ -14,6 +14,6 @@ export class LoginUser {
 
     public execute = async ({password, email}: IRequest): Promise<string | null> => {
         const user = await this.userRepository.login({password, email});
-        return user ? jwt.sign(user.dataValues, JWT_KEY || 'secret', { expiresIn: '1h' }) : null;
+        return user ? jwt.sign(user.dataValues, JWT_KEY || 'secret', { expiresIn: '100h' }) : null;
     }
 }
