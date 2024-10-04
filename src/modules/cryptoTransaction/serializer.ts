@@ -1,8 +1,14 @@
 import CryptoTransactionModel from "./model/model";
+import { IResponse } from "./services/GetExecutionPriceCryptoTransaction";
 
 interface CryptoTransactionSerializer {
     value: number
     transactionType: number
+}
+
+interface ExecutionPriceSerializer {
+    sell: number,
+    buy: number,
 }
 
 export function cryptoTransactionSerializer(cryptoTransaction: CryptoTransactionModel): CryptoTransactionSerializer {
@@ -12,4 +18,13 @@ export function cryptoTransactionSerializer(cryptoTransaction: CryptoTransaction
     }
 
     return serializer;
+}
+
+export function executionPriceSerializer(executionPrice: IResponse): ExecutionPriceSerializer {
+    const serializer: ExecutionPriceSerializer = {
+        sell: executionPrice.sell,
+        buy: executionPrice.buy
+    }
+
+    return serializer;  
 }
