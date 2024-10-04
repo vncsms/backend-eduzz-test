@@ -3,6 +3,8 @@ import { DataType } from "sequelize-typescript";
 import AccountModel from "../model/model";
 import { IAccountRepository } from "./IAccountRepository";
 import { ICreateAccountDTO } from "./ICreateAccountDTO";
+import { IGetAccountDTO } from "./IGetAccountDTO";
+import { IUpdateAccountDTO } from "./IUpdateAccountDTO";
 
 export class AccountRepository implements IAccountRepository {
     private accountRepository;
@@ -35,5 +37,13 @@ export class AccountRepository implements IAccountRepository {
 
     public async create(accountData: ICreateAccountDTO): Promise<AccountModel> {
         return this.accountRepository.create(accountData);
+    }
+
+    public async get(userData: IGetAccountDTO): Promise<AccountModel | null> {
+        return this.accountRepository.findOne({ where: { userId: userData.userId } });
+    }
+
+    public async updateBalance(accountData: IUpdateAccountDTO):  Promise<AccountModel> {
+        return accountData.account.increment({balance: accountData.value});
     }
 }

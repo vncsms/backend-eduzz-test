@@ -5,22 +5,14 @@ import { authSerializer, userSerializer } from "../serializer";
 import { CreateUser } from "../services/CreateUser";
 import { container } from "tsyringe";
 import { LoginUser } from "../services/LoginUser";
+import { validateBody } from "../../../shared/utils/validation";
 
 export default class UserController {
 
     public async create(request: Request, response: Response, next: NextFunction) {
         try {
-            const validateBody = await createUserValidation.validate(request.body, { abortEarly: false }).catch(errors => {
-                const schemaErrors = errors.inner.map((err: any) => {
-                    return { field: err.path, message: err.message };
-                })
-                throw new BaseError (
-                    409,
-                    JSON.stringify(schemaErrors)
-                )
-            })
-
-            const { nome, password, email } = validateBody;
+            const validatedBody = await validateBody(createUserValidation, request);
+            const { nome, password, email } = validatedBody;
             const createUser = container.resolve(CreateUser);
             const user = await createUser.execute({nome, password, email});
             response.locals.data = userSerializer(user);
@@ -33,17 +25,9 @@ export default class UserController {
 
     public async login(request: Request, response: Response, next: NextFunction) {
         try {
-            const validateBody = await loginUserValidation.validate(request.body, { abortEarly: false }).catch(errors => {
-                const schemaErrors = errors.inner.map((err: any) => {
-                    return { field: err.path, message: err.message };
-                })
-                throw new BaseError (
-                    409,
-                    schemaErrors.stringify()
-                )
-            })
+            const validatedBody = await validateBody(loginUserValidation, request);
 
-            const { password, email } = validateBody;
+            const { password, email } = validatedBody;
             const loginUser = container.resolve(LoginUser);
             const auth = await loginUser.execute({password, email});
             if (auth) {
