@@ -16,3 +16,8 @@ export const successHandlerMiddleware = async (req: Request, res: Response, _nex
     // Future Log
     return res;
 }
+
+export const preHandlerMiddleware = async (req: Request, res: Response, _next:NextFunction) => {
+    // Future log
+    _next();
+}

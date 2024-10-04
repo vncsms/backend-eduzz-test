@@ -3,25 +3,22 @@ import { container } from "tsyringe";
 import { createTransactionValidation } from "../validation/transaction";
 import { CreateTransaction } from "../services/CreateTransaction";
 import { transactionSerializer } from "../serializer";
-import { BaseError } from "../../error/model/model";
+import { validateBody } from "../../../shared/utils/validation";
 
 export default class TransactionController {
 
     public async create(request: Request, response: Response, next: NextFunction) {
         try {
-            const validateBody = await createTransactionValidation.validate(request.body, { abortEarly: false }).catch(errors => {
-                const schemaErrors = errors.inner.map((err: any) => {
-                    return { field: err.path, message: err.message };
-                })
-                throw new BaseError (
-                    409,
-                    schemaErrors.stringify()
-                )
-            })
+            var token = request.headers.authorization;
+            token = token?.split(' ')[1] || '';
+            const arrayToken = token?.split('.');
+            const tokenPayload = JSON.parse(atob(arrayToken[1]));
 
-            const { value, transactionType } = validateBody;
+            const validatedBody = await validateBody(createTransactionValidation, request);
+
+            const { value, transactionType } = validatedBody;
             const createTransaction = container.resolve(CreateTransaction);
-            const transaction = await createTransaction.execute({ value, accountId: 1, transactionType });
+            const transaction = await createTransaction.execute({ value, userId: tokenPayload.id, transactionType });
             response.locals.data = transactionSerializer(transaction);
             response.locals.status = 200;
             next();
