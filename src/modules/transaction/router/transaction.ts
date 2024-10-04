@@ -1,9 +1,9 @@
 import { Router } from 'express';
+import TransactionController from '../controller/transactionController';
 
 const transactionRouter = Router();
 
-transactionRouter.get('/', (req, res) => {
-    res.send("Hello");
-})
+const transactionController = new TransactionController();
+transactionRouter.post('/', transactionController.create);
 
 export default transactionRouter;
