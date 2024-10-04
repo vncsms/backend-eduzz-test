@@ -4,21 +4,19 @@ import { createTransactionValidation } from "../validation/transaction";
 import { CreateTransaction } from "../services/CreateTransaction";
 import { transactionSerializer } from "../serializer";
 import { validateBody } from "../../../shared/utils/validation";
+import { jwtValidation } from "../../../shared/utils/tokenAuthenticator";
 
 export default class TransactionController {
 
     public async create(request: Request, response: Response, next: NextFunction) {
         try {
-            var token = request.headers.authorization;
-            token = token?.split(' ')[1] || '';
-            const arrayToken = token?.split('.');
-            const tokenPayload = JSON.parse(atob(arrayToken[1]));
 
+            const userInfo =  jwtValidation(request);
             const validatedBody = await validateBody(createTransactionValidation, request);
 
             const { value, transactionType } = validatedBody;
             const createTransaction = container.resolve(CreateTransaction);
-            const transaction = await createTransaction.execute({ value, userId: tokenPayload.id, transactionType });
+            const transaction = await createTransaction.execute({ value, userId: userInfo.id, transactionType });
             response.locals.data = transactionSerializer(transaction);
             response.locals.status = 200;
             next();
