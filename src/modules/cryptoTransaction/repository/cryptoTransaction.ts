@@ -3,6 +3,7 @@ import { DataType } from "sequelize-typescript";
 import CryptoTransactionModel from "../model/model";
 import { ICryptoTransactionRepository } from "./ICryptoTransactionRepository";
 import { ICreateCryptoTransactionDTO } from "./ICreateCryptoTransactionDTO";
+import { IListCryptoTransactionDTO } from "./IListCryptoTransactionDTO";
 
 export class CryptoTransactionRepository implements ICryptoTransactionRepository {
     private cryptoTransactionRepository;
@@ -43,5 +44,17 @@ export class CryptoTransactionRepository implements ICryptoTransactionRepository
 
     public async create(cryptoTransactionData: ICreateCryptoTransactionDTO): Promise<CryptoTransactionModel> {
         return this.cryptoTransactionRepository.create(cryptoTransactionData);
+    }
+
+    public async count(countData: IListCryptoTransactionDTO): Promise<number> {
+        return this.cryptoTransactionRepository.count({where: {accountId: countData.accountId}});
+    }
+
+    public async list(listData: IListCryptoTransactionDTO): Promise<CryptoTransactionModel[]> {
+        return this.cryptoTransactionRepository.findAll({
+            offset: 0,
+            limit: 10,
+            attributes: ['createdAt', 'value', 'executionPrice', 'quantity'],
+            where: {accountId: listData.accountId}});
     }
 }
