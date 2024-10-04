@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createUserValidation, loginUserValidation } from "../validation/user";
-import { DetailedError } from "../../error/model/model";
+import { BaseError, UnauthorizedError } from "../../error/model/model";
 import { authSerializer, userSerializer } from "../serializer";
 import { CreateUser } from "../services/CreateUser";
 import { container } from "tsyringe";
@@ -14,9 +14,9 @@ export default class UserController {
                 const schemaErrors = errors.inner.map((err: any) => {
                     return { field: err.path, message: err.message };
                 })
-                throw new DetailedError (
+                throw new BaseError (
                     409,
-                    schemaErrors
+                    JSON.stringify(schemaErrors)
                 )
             })
 
@@ -37,9 +37,9 @@ export default class UserController {
                 const schemaErrors = errors.inner.map((err: any) => {
                     return { field: err.path, message: err.message };
                 })
-                throw new DetailedError (
+                throw new BaseError (
                     409,
-                    schemaErrors
+                    schemaErrors.stringify()
                 )
             })
 
@@ -50,8 +50,7 @@ export default class UserController {
                 response.locals.data = authSerializer(auth);
                 response.locals.status = 200;
             } else {
-                response.locals.data = { data: 'Auth Error'};
-                response.locals.status = 401;
+                throw new UnauthorizedError();
             }
 
             next();

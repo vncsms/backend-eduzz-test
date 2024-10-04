@@ -1,11 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
-import { DetailedError } from "../modules/error/model/model";
+import { BaseError } from "../modules/error/model/model";
 
 export const errorHandlerMiddleware = async (err: Error, req: Request, res: Response, _next: NextFunction): Promise<express.Response<any, Record<string, any>>> => {
-    if (err instanceof DetailedError) {
+    if (err instanceof BaseError) {
         // Future Log
         return res.status(err.statusCode)
-        .json({status: 'error', message: err.schemaErrors});
+        .json({status: err.messageError, message: err.messageError});
     }
 
     return res.status(500).json({ error: 'error', message: 'Internal server error'});

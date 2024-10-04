@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { DetailedError } from "../../error/model/model";
 import { container } from "tsyringe";
 import { createTransactionValidation } from "../validation/transaction";
 import { CreateTransaction } from "../services/CreateTransaction";
 import { transactionSerializer } from "../serializer";
+import { BaseError } from "../../error/model/model";
 
 export default class TransactionController {
 
@@ -13,9 +13,9 @@ export default class TransactionController {
                 const schemaErrors = errors.inner.map((err: any) => {
                     return { field: err.path, message: err.message };
                 })
-                throw new DetailedError (
+                throw new BaseError (
                     409,
-                    schemaErrors
+                    schemaErrors.stringify()
                 )
             })
 
