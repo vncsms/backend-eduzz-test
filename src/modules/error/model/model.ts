@@ -3,14 +3,32 @@ interface IValidationSchema {
     message: string,
 }
 
-export class DetailedError extends Error {
+export class BaseError extends Error {
     statusCode: number;
-    schemaErrors: IValidationSchema[] | null;
+    messageError: string;
 
-    constructor(statusCode: number, schemaErrors: IValidationSchema[]) {
+    constructor(statusCode: number, messageError: string) {
         super();
         this.statusCode = statusCode;
-        this.schemaErrors = schemaErrors || null;
-        Object.setPrototypeOf(this, DetailedError.prototype)
+        this.messageError = messageError;
+        Object.setPrototypeOf(this, BaseError.prototype)
+    }
+}
+
+export class UnauthorizedError extends BaseError {
+    constructor () {
+        super(401, 'Unauthorized');
+    }
+}
+
+export class ConflictError extends BaseError {
+    constructor () {
+        super(409, 'Conflict');
+    }
+}
+
+export class InternalError extends BaseError {
+    constructor () {
+        super(500, 'Internal Server Error');
     }
 }
