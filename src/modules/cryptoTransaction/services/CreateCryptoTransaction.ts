@@ -3,9 +3,10 @@ import { IAccountRepository } from "../../account/repository/IAccountRepository"
 import { UnauthorizedError } from "../../error/model/model";
 import { ICryptoTransactionRepository } from "../repository/ICryptoTransactionRepository";
 import CryptoTransactionModel from "../model/model";
+import { IRequestProvider } from "../../../shared/provider/http/IRequestProvider";
 
 export interface IRequest {
-    value: number,
+    quantity: number,
     userId: number,
     transactionType: number,
 }
@@ -14,20 +15,36 @@ export interface IRequest {
 export class CreateTransaction {
     constructor(
         @inject("CryptoTransactionRepository") private cryptoTransactionRepository: ICryptoTransactionRepository,
-        @inject("AccountRepository") private accountRepository: IAccountRepository
+        @inject("AccountRepository") private accountRepository: IAccountRepository,
+        @inject("AxiosRequestProvider") private requestProvider: IRequestProvider
     ) {}
 
-    public execute = async ({value, userId, transactionType}: IRequest): Promise<CryptoTransactionModel> => {
+    public execute = async ({quantity, userId, transactionType}: IRequest): Promise<CryptoTransactionModel> => {
         const account = await this.accountRepository.get({userId});
+
+        if (!account?.dataValues.balance) {
+            throw new UnauthorizedError();
+        }
+
+        const response = await this.requestProvider.sendRequest('https://www.mercadobitcoin.net/api/BTC/ticker/');
+
+        const executionPrice = parseFloat(response.data.ticker.sell);
+
+        const cryptoPrice = quantity * executionPrice;
+
+        if (cryptoPrice > account?.dataValues.balance) {
+            throw new UnauthorizedError();
+        }
+
         if (account?.dataValues?.id) {
             const cryptoTransaction = await this.cryptoTransactionRepository.create({
-                value, 
+                value: cryptoPrice,
                 accountId: account.dataValues.id,
-                quantity: 1,
-                executionPrice: 1,
+                quantity: quantity,
+                executionPrice,
                 transactionType});
             if (cryptoTransaction) {
-                await this.accountRepository.updateBalance({account, value: -value});
+                await this.accountRepository.updateBalance({account, value: -cryptoPrice});
             }
             return cryptoTransaction;
         } else

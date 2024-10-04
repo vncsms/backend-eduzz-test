@@ -14,13 +14,14 @@ export default class CryptoTransactionController {
             const userInfo =  jwtValidation(request);
             const validatedBody = await validateBody(createCryptoTransactionValidation, request);
 
-            const { value, transactionType } = validatedBody;
+            const { quantity, transactionType } = validatedBody;
             const createCryptoTransaction = container.resolve(CreateTransaction);
-            const cryptoTransaction = await createCryptoTransaction.execute({ value, userId: userInfo.id, transactionType });
+            const cryptoTransaction = await createCryptoTransaction.execute({ quantity, userId: userInfo.id, transactionType });
             response.locals.data = cryptoTransactionSerializer(cryptoTransaction);
             response.locals.status = 200;
             next();
         } catch (err) {
+            console.log(err);
             next(err);
         }
     }
