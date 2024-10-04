@@ -4,6 +4,7 @@ import CryptoTransactionModel from "../model/model";
 import { ICryptoTransactionRepository } from "./ICryptoTransactionRepository";
 import { ICreateCryptoTransactionDTO } from "./ICreateCryptoTransactionDTO";
 import { IListCryptoTransactionDTO } from "./IListCryptoTransactionDTO";
+import { ICountCryptoTransactionDTO } from "./ICountCryptoTransactionDTO";
 
 export class CryptoTransactionRepository implements ICryptoTransactionRepository {
     private cryptoTransactionRepository;
@@ -46,14 +47,14 @@ export class CryptoTransactionRepository implements ICryptoTransactionRepository
         return this.cryptoTransactionRepository.create(cryptoTransactionData);
     }
 
-    public async count(countData: IListCryptoTransactionDTO): Promise<number> {
+    public async count(countData: ICountCryptoTransactionDTO): Promise<number> {
         return this.cryptoTransactionRepository.count({where: {accountId: countData.accountId}});
     }
 
     public async list(listData: IListCryptoTransactionDTO): Promise<CryptoTransactionModel[]> {
         return this.cryptoTransactionRepository.findAll({
-            offset: 0,
-            limit: 10,
+            offset: listData.offset,
+            limit: listData.limit,
             attributes: ['createdAt', 'value', 'executionPrice', 'quantity'],
             where: {accountId: listData.accountId}});
     }

@@ -42,7 +42,7 @@ export class ListCryptoTransaction {
             throw new UnauthorizedError();
         }
 
-        const startIndex = (page - 1) * limit;
+        const offset = (page - 1) * limit;
         
         const total = await this.cryptoTransactionRepository.count({accountId: account?.dataValues.id});
 
@@ -50,7 +50,8 @@ export class ListCryptoTransaction {
 
         const executionPriceSell = parseFloat(response.data.ticker.sell);
 
-        const transactions = await this.cryptoTransactionRepository.list({accountId: account?.dataValues.id});
+        const transactions = await this.cryptoTransactionRepository.list({accountId: account?.dataValues.id,
+            offset, limit  });
 
         const cryptoTransactions: ITransacation[] = transactions.map((transaction: CryptoTransactionModel) => {
             return {
