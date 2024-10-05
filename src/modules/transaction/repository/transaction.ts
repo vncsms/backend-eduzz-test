@@ -24,9 +24,6 @@ export class TransactionRepository implements ITransactionRepository {
             accountId: {
                 type: DataType.NUMBER
             },
-            transactionType: {
-                type: DataType.NUMBER
-            },
             createdAt: {
                 type: DataType.DATE,
                 allowNull: true

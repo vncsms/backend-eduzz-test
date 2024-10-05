@@ -14,9 +14,9 @@ export default class TransactionController {
             const userInfo =  jwtValidation(request);
             const validatedBody = await validateBody(createTransactionValidation, request);
 
-            const { value, transactionType } = validatedBody;
+            const { value } = validatedBody;
             const createTransaction = container.resolve(CreateTransaction);
-            const transaction = await createTransaction.execute({ value, userId: userInfo.id, transactionType });
+            const transaction = await createTransaction.execute({ value, userId: userInfo.id });
             response.locals.data = transactionSerializer(transaction);
             response.locals.status = 200;
             next();

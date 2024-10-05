@@ -16,15 +16,9 @@ export interface IResponse {
 export class GetExecutionPrice {
     constructor(
         @inject("AxiosRequestProvider") private requestProvider: IRequestProvider,
-        @inject("AccountRepository") private accountRepository: IAccountRepository,
     ) {}
 
     public execute = async ({userId}: IRequest): Promise<IResponse> => {
-        const account = await this.accountRepository.get({userId});
-
-        if (!account?.dataValues.balance) {
-            throw new UnauthorizedError();
-        }
 
         const response = await this.requestProvider.sendRequest('https://www.mercadobitcoin.net/api/BTC/ticker/');
 
