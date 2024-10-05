@@ -2,6 +2,6 @@ export const {
     STAGE,
     SERVER_PORT,
     JWT_KEY,
-    TOKEN_LIFESPAN,
-    CRYPTO_API_URL
+    CRYPTO_API_URL,
+    SALT_ROUNDS
 } = process.env;
