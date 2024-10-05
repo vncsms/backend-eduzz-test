@@ -6,7 +6,7 @@ export default interface CryptoTransactionModel extends Model<InferAttributes<Cr
     value: number;
     accountId: number;
     quantity: number;
-    transactionType: number;
+    transactionType?: number;
     executionPrice: number;
     createdAt?: CreationOptional<Date>;
     updatedAt?: CreationOptional<Date>;
