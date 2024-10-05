@@ -10,6 +10,6 @@ export interface ICryptoTransactionRepository {
     list(listData: IListCryptoTransactionDTO): Promise<CryptoTransactionModel[]>,
     count(countData: ICountCryptoTransactionDTO): Promise<number>,
     listAllInvestments(listData: IListAllCryptoTransactionDTO): Promise<CryptoTransactionModel[]>,
-    listAllRetrieves(listData: IListAllCryptoTransactionDTO): Promise<CryptoTransactionModel[]>,
+    listAllCryptoSales(listData: IListAllCryptoTransactionDTO): Promise<CryptoTransactionModel[]>,
     changeCryptoTransactionType(updateData: IChangeCryptoTransactionTypeDTO): Promise<any>
 }
