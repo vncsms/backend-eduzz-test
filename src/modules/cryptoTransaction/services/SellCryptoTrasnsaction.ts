@@ -36,7 +36,7 @@ export class SellCryptoTransaction {
 
         const executionPrice = parseFloat(response.data.ticker.sell);
 
-        const transactions = await this.cryptoTransactionRepository.listAll({accountId: account?.dataValues.id});
+        const transactions = await this.cryptoTransactionRepository.listAllInvestments({accountId: account?.dataValues.id});
 
         for (var i = 0 ; i < transactions.length; i++) {
 
