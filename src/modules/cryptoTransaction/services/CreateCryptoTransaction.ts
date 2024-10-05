@@ -8,7 +8,6 @@ import { IRequestProvider } from "../../../shared/provider/http/IRequestProvider
 export interface IRequest {
     quantity: number,
     userId: number,
-    transactionType: number,
 }
 
 @injectable()
@@ -19,7 +18,7 @@ export class CreateTransaction {
         @inject("AxiosRequestProvider") private requestProvider: IRequestProvider
     ) {}
 
-    public execute = async ({quantity, userId, transactionType}: IRequest): Promise<CryptoTransactionModel> => {
+    public execute = async ({quantity, userId}: IRequest): Promise<CryptoTransactionModel> => {
         const account = await this.accountRepository.get({userId});
 
         if (!account?.dataValues.balance) {
@@ -41,8 +40,7 @@ export class CreateTransaction {
                 value: cryptoPrice,
                 accountId: account.dataValues.id,
                 quantity: quantity,
-                executionPrice,
-                transactionType});
+                executionPrice});
             if (cryptoTransaction) {
                 await this.accountRepository.updateBalance({account, value: -cryptoPrice});
             }

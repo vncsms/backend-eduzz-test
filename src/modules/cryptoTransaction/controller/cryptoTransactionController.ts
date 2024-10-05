@@ -4,9 +4,10 @@ import { CreateTransaction } from "../services/CreateCryptoTransaction";
 import { cryptoTransactionSerializer, executionPriceSerializer } from "../serializer";
 import { validateBody } from "../../../shared/utils/validation";
 import { jwtValidation } from "../../../shared/utils/tokenAuthenticator";
-import { createCryptoTransactionValidation } from "../validation/transaction";
+import { createCryptoTransactionValidation, sellCryptoTransactionValidation } from "../validation/transaction";
 import { GetExecutionPrice } from "../services/GetExecutionPriceCryptoTransaction";
 import { ListCryptoTransaction } from "../services/ListCryptoTransaction";
+import { SellCryptoTransaction } from "../services/SellCryptoTrasnsaction";
 
 export default class CryptoTransactionController {
 
@@ -16,9 +17,9 @@ export default class CryptoTransactionController {
             const userInfo =  jwtValidation(request);
             const validatedBody = await validateBody(createCryptoTransactionValidation, request);
 
-            const { quantity, transactionType } = validatedBody;
+            const { quantity } = validatedBody;
             const createCryptoTransaction = container.resolve(CreateTransaction);
-            const cryptoTransaction = await createCryptoTransaction.execute({ quantity, userId: userInfo.id, transactionType });
+            const cryptoTransaction = await createCryptoTransaction.execute({ quantity, userId: userInfo.id });
             response.locals.data = cryptoTransactionSerializer(cryptoTransaction);
             response.locals.status = 200;
             next();
@@ -53,6 +54,22 @@ export default class CryptoTransactionController {
             const getListCryptoTransaction = container.resolve(ListCryptoTransaction);
             const executionPrice = await getListCryptoTransaction.execute({userId: userInfo.id, page, limit });
             response.locals.data = executionPrice;
+            response.locals.status = 200;
+            next();
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    }
+
+    public async sell(request: Request, response: Response, next: NextFunction) {
+        try {
+            const userInfo =  jwtValidation(request);
+            const validatedBody = await validateBody(sellCryptoTransactionValidation, request);
+            const { quantity } = validatedBody;
+            const sellCryptoTransaction = container.resolve(SellCryptoTransaction);
+            const saleData = await sellCryptoTransaction.execute({userId: userInfo.id, quantity });
+            response.locals.data = saleData;
             response.locals.status = 200;
             next();
         } catch (err) {

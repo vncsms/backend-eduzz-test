@@ -3,7 +3,6 @@ import { IResponse } from "./services/GetExecutionPriceCryptoTransaction";
 
 interface CryptoTransactionSerializer {
     value: number
-    transactionType: number
 }
 
 interface ExecutionPriceSerializer {
@@ -13,8 +12,7 @@ interface ExecutionPriceSerializer {
 
 export function cryptoTransactionSerializer(cryptoTransaction: CryptoTransactionModel): CryptoTransactionSerializer {
     const serializer: CryptoTransactionSerializer = {
-        value: cryptoTransaction.value,
-        transactionType: cryptoTransaction.transactionType
+        value: cryptoTransaction.value
     }
 
     return serializer;
