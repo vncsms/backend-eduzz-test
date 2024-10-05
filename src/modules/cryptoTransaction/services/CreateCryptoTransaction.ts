@@ -4,6 +4,7 @@ import { BaseError, UnauthorizedError } from "../../error/model/model";
 import { ICryptoTransactionRepository } from "../repository/ICryptoTransactionRepository";
 import CryptoTransactionModel from "../model/model";
 import { IRequestProvider } from "../../../shared/provider/http/IRequestProvider";
+import { CRYPTO_API_URL } from "../../../shared/utils/settings";
 
 export interface IRequest {
     quantity: number,
@@ -24,7 +25,7 @@ export class CreateTransaction {
         if (!account?.balance || !account?.id)
             throw new UnauthorizedError();
 
-        const response = await this.requestProvider.sendRequest('https://www.mercadobitcoin.net/api/BTC/ticker/');
+        const response = await this.requestProvider.sendRequest(CRYPTO_API_URL || '');
 
         const executionPrice = parseFloat(response.data.ticker.sell);
 

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { createUserValidation, loginUserValidation } from "../validation/user";
-import { BaseError, UnauthorizedError } from "../../error/model/model";
+import { UnauthorizedError } from "../../error/model/model";
 import { authSerializer, userSerializer } from "../serializer";
 import { CreateUser } from "../services/CreateUser";
 import { container } from "tsyringe";
