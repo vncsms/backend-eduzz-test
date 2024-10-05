@@ -5,7 +5,6 @@ export default interface TransactionModel extends Model<InferAttributes<Transact
     id?: number;
     value: number;
     accountId?: number;
-    transactionType: number;
     createdAt?: CreationOptional<Date>;
     updatedAt?: CreationOptional<Date>;
 }

@@ -28,9 +28,8 @@ export class GetExtract {
     public execute = async ({userId, days}: IRequest): Promise<any> => {
         const account = await this.accountRepository.get({userId});
 
-        if (!account?.id) {
+        if (!account?.id)
             throw new UnauthorizedError();
-        }
 
         const deposits = await this.transactionRepository.getAll({id: account.id, days});
         const investments = await this.cryptoTransactionRepository.listAllInvestments({accountId: account.id});
