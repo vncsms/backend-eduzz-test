@@ -48,6 +48,7 @@ export class UserRepository implements IUserRepository {
     }
 
     public async login(credentials: ILoginnUserDTO) : Promise<UserModel | null> {
-        return this.userRepository.findOne({ where: { email: credentials.email, password: credentials.password } });
+        return this.userRepository.findOne({attributes: ['id', 'nome', 'email'],
+            where: { email: credentials.email, password: credentials.password } });
     }
 }

@@ -14,7 +14,7 @@ export interface IRequest {
 export interface IResponse {
     deposits: TransactionModel[],
     investments: CryptoTransactionModel[],
-    retrieves: CryptoTransactionModel[],
+    cryptoSales: CryptoTransactionModel[],
 }
 
 @injectable()
@@ -33,8 +33,8 @@ export class GetExtract {
 
         const deposits = await this.transactionRepository.getAll({id: account.id, days});
         const investments = await this.cryptoTransactionRepository.listAllInvestments({accountId: account.id});
-        const retrieves = await this.cryptoTransactionRepository.listAllRetrieves({accountId: account.id});
+        const cryptoSales = await this.cryptoTransactionRepository.listAllCryptoSales({accountId: account.id});
 
-        return {deposits, investments, retrieves};
+        return {deposits, investments, cryptoSales};
     }
 }

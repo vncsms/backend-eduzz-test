@@ -15,7 +15,7 @@ interface VolumeSerializer {
 interface ExtractSerializer {
     deposits: IDeposit[],
     investments: IInvestment[],
-    retrieves: IInvestment[],
+    cryptoSales: IInvestment[],
 }
 
 interface IDeposit {
@@ -51,7 +51,7 @@ export function extractSerializer(extract: IResponse): ExtractSerializer {
                 executionPrice: element.executionPrice
             }
         }),
-        retrieves: extract.retrieves.map((element: CryptoTransactionModel) => {
+        cryptoSales: extract.cryptoSales.map((element: CryptoTransactionModel) => {
             return {
                 value: element.value,
                 createdAt: element.createdAt,

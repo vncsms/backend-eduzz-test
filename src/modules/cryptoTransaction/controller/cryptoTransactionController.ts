@@ -5,7 +5,7 @@ import { cryptoTransactionSerializer, executionPriceSerializer } from "../serial
 import { validateBody } from "../../../shared/utils/validation";
 import { jwtValidation } from "../../../shared/utils/tokenAuthenticator";
 import { createCryptoTransactionValidation, sellCryptoTransactionValidation } from "../validation/transaction";
-import { GetExecutionPrice } from "../services/GetExecutionPriceCryptoTransaction";
+import { GetExecutionPrice } from "../services/GetExecutionPrice";
 import { ListCryptoTransaction } from "../services/ListCryptoTransaction";
 import { SellCryptoTransaction } from "../services/SellCryptoTrasnsaction";
 
