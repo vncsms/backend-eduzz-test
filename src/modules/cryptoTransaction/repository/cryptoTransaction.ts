@@ -62,9 +62,14 @@ export class CryptoTransactionRepository implements ICryptoTransactionRepository
             where: {accountId: listData.accountId, transactionType: 1}});
     }
 
-    public async listAll(listData: IListAllCryptoTransactionDTO): Promise<CryptoTransactionModel[]> {
+    public async listAllInvestments(listData: IListAllCryptoTransactionDTO): Promise<CryptoTransactionModel[]> {
         return this.cryptoTransactionRepository.findAll({
             where: {accountId: listData.accountId, transactionType: 1}});
+    }
+
+    public async listAllRetrieves(listData: IListAllCryptoTransactionDTO): Promise<CryptoTransactionModel[]> {
+        return this.cryptoTransactionRepository.findAll({
+            where: {accountId: listData.accountId, transactionType: 2}});
     }
 
     public async changeCryptoTransactionType(updateData: IChangeCryptoTransactionTypeDTO): Promise<any> {
