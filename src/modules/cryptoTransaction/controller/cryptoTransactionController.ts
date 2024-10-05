@@ -32,9 +32,9 @@ export default class CryptoTransactionController {
     public async getExecutionPrice(request: Request, response: Response, next: NextFunction) {
         try {
 
-            const userInfo =  jwtValidation(request);
+            jwtValidation(request);
             const getExecutionPrice = container.resolve(GetExecutionPrice);
-            const executionPrice = await getExecutionPrice.execute({userId: userInfo.id });
+            const executionPrice = await getExecutionPrice.execute();
             response.locals.data = executionPriceSerializer(executionPrice);
             response.locals.status = 200;
             next();
