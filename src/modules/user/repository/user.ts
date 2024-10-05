@@ -4,7 +4,7 @@ import { ICreateUserDTO } from "./ICreateUserDTO";
 import { IGetUserDTO } from "./IGetUserDTO";
 import { ILoginnUserDTO } from "./ILoginUserDTO";
 import { IUserRepository } from "./IUserRepository";
-import { DataType, UpdatedAt } from "sequelize-typescript";
+import { DataType } from "sequelize-typescript";
 
 
 export class UserRepository implements IUserRepository {
