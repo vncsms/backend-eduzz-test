@@ -5,10 +5,10 @@ export const errorHandlerMiddleware = async (err: Error, req: Request, res: Resp
     if (err instanceof BaseError) {
         // Future Log
         return res.status(err.statusCode)
-        .json({status: err.messageError, message: err.messageError});
+        .json({message: err.messageError});
     }
 
-    return res.status(500).json({ error: 'error', message: 'Internal server error'});
+    return res.status(500).json({ message: 'Internal server error'});
 }
 
 export const successHandlerMiddleware = async (req: Request, res: Response, _next: NextFunction): Promise<express.Response<any, Record<string, any>>> => {

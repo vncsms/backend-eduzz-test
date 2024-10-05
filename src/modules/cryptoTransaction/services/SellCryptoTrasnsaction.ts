@@ -1,17 +1,12 @@
 import { inject, injectable } from "tsyringe";
 import { IAccountRepository } from "../../account/repository/IAccountRepository";
-import { UnauthorizedError } from "../../error/model/model";
+import { BaseError, UnauthorizedError } from "../../error/model/model";
 import { IRequestProvider } from "../../../shared/provider/http/IRequestProvider";
 import { ICryptoTransactionRepository } from "../repository/ICryptoTransactionRepository";
 
 export interface IRequest {
     userId: number,
     quantity: number,
-}
-
-export interface IResponse {
-    quantity: number,
-    balance: number,
 }
 
 @injectable()
@@ -25,9 +20,8 @@ export class SellCryptoTransaction {
     public execute = async ({userId, quantity}: IRequest): Promise<any> => {
         const account = await this.accountRepository.get({userId});
 
-        if (!account?.dataValues.id) {
+        if (!account?.id)
             throw new UnauthorizedError();
-        }
 
         var quantityTotal = 0;
         var soldTransitions: number[] = [];
@@ -36,32 +30,35 @@ export class SellCryptoTransaction {
 
         const executionPrice = parseFloat(response.data.ticker.sell);
 
-        const transactions = await this.cryptoTransactionRepository.listAllInvestments({accountId: account?.dataValues.id});
+        const transactions = await this.cryptoTransactionRepository.listAllInvestments({accountId: account?.id});
+
+        if (!transactions.length)
+            throw new BaseError(422, 'No transactions');
 
         for (var i = 0 ; i < transactions.length; i++) {
 
-            quantityTotal += transactions[i].dataValues.quantity;
-            soldTransitions.push(transactions[i].dataValues.id || 0);
+            quantityTotal += transactions[i].quantity;
+            soldTransitions.push(transactions[i].id || 0);
 
-            if (quantity <= quantityTotal  ) {
+            if (quantity <= quantityTotal) {
                 const diff = quantityTotal - quantity;
                 quantityTotal = quantity;
-                await this.cryptoTransactionRepository.create({
-                    value: diff * transactions[i].dataValues.executionPrice,
-                    accountId: account.dataValues.id,
-                    quantity: diff,
-                    executionPrice: transactions[i].dataValues.executionPrice});
+                if (diff != 0) {
+                    await this.cryptoTransactionRepository.create({
+                        value: diff * transactions[i].executionPrice,
+                        accountId: account.id,
+                        quantity: diff,
+                        executionPrice: transactions[i].executionPrice});
+                }
                 break;
             }
         }
+
+        if (quantityTotal < quantity)
+            throw new BaseError(422, 'Insufficient crypto balance');
         
-        this.accountRepository.updateBalance({account ,value: quantityTotal * executionPrice});
+        this.accountRepository.updateBalance({account, value: quantityTotal * executionPrice});
 
         await this.cryptoTransactionRepository.changeCryptoTransactionType({transactionsId: soldTransitions});
-
-        return {
-            quantity: quantityTotal * executionPrice,
-            balance: account.balance || 0 + quantityTotal * executionPrice
-        };
     }
 }

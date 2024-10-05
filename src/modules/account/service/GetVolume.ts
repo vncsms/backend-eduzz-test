@@ -23,9 +23,8 @@ export class GetVolume {
     public execute = async ({userId}: IRequest): Promise<IResponseGetVolume> => {
         const account = await this.accountRepository.get({userId});
 
-        if (!account?.id) {
+        if (!account?.id)
             throw new UnauthorizedError();
-        }
 
         const investments = await this.cryptoTransactionRepository.listAllInvestments({accountId: account.id});
         const retrieves = await this.cryptoTransactionRepository.listAllRetrieves({accountId: account.id});

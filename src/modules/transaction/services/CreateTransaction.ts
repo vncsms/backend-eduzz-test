@@ -7,7 +7,6 @@ import { UnauthorizedError } from "../../error/model/model";
 export interface IRequest {
     value: number,
     userId: number,
-    transactionType: number,
 }
 
 @injectable()
@@ -17,15 +16,16 @@ export class CreateTransaction {
         @inject("AccountRepository") private accountRepository: IAccountRepository
     ) {}
 
-    public execute = async ({value, userId, transactionType}: IRequest): Promise<TransactionModel> => {
+    public execute = async ({value, userId}: IRequest): Promise<TransactionModel> => {
         const account = await this.accountRepository.get({userId});
-        if (account?.dataValues?.id) {
-            const transaction = await this.transactionRepository.create({value, accountId: account.dataValues.id ,transactionType});
-            if (transaction) {
-                await this.accountRepository.updateBalance({account, value});
-            }
-            return transaction;
-        } else
+        if (!account?.id)
             throw new UnauthorizedError();
+
+        const transaction = await this.transactionRepository.create({value, accountId: account.id});
+
+        await this.accountRepository.updateBalance({account, value});
+
+        return transaction;
+
     }
 }

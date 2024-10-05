@@ -14,9 +14,9 @@ export class GetBalance {
 
     public execute = async ({userId}: IRequest): Promise<number> => {
         const account = await this.accountRepository.get({userId});
-        if (account?.dataValues?.balance) {
-            return account.dataValues.balance;
-        } else
+        if (!account?.balance)
             throw new UnauthorizedError();
+        return account.balance;
+
     }
 }

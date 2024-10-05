@@ -38,19 +38,18 @@ export class ListCryptoTransaction {
     public execute = async ({userId, page, limit}: IRequest): Promise<IResponse> => {
         const account = await this.accountRepository.get({userId});
 
-        if (!account?.dataValues.id) {
+        if (!account?.id)
             throw new UnauthorizedError();
-        }
 
         const offset = (page - 1) * limit;
         
-        const total = await this.cryptoTransactionRepository.count({accountId: account?.dataValues.id});
+        const total = await this.cryptoTransactionRepository.count({accountId: account?.id});
 
         const response = await this.requestProvider.sendRequest('https://www.mercadobitcoin.net/api/BTC/ticker/');
 
         const executionPriceSell = parseFloat(response.data.ticker.sell);
 
-        const transactions = await this.cryptoTransactionRepository.list({accountId: account?.dataValues.id,
+        const transactions = await this.cryptoTransactionRepository.list({accountId: account?.id,
             offset, limit  });
 
         const cryptoTransactions: ITransacation[] = transactions.map((transaction: CryptoTransactionModel) => {
