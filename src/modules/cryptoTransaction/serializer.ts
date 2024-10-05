@@ -1,5 +1,5 @@
 import CryptoTransactionModel from "./model/model";
-import { IResponse } from "./services/GetExecutionPriceCryptoTransaction";
+import { IResponse } from "./services/GetExecutionPrice";
 
 interface CryptoTransactionSerializer {
     value: number

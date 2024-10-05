@@ -4,7 +4,7 @@ import { ICreateUserDTO } from "./ICreateUserDTO";
 import { IGetUserDTO } from "./IGetUserDTO";
 import { ILoginnUserDTO } from "./ILoginUserDTO";
 import { IUserRepository } from "./IUserRepository";
-import { DataType, UpdatedAt } from "sequelize-typescript";
+import { DataType } from "sequelize-typescript";
 
 
 export class UserRepository implements IUserRepository {
@@ -48,6 +48,7 @@ export class UserRepository implements IUserRepository {
     }
 
     public async login(credentials: ILoginnUserDTO) : Promise<UserModel | null> {
-        return this.userRepository.findOne({ where: { email: credentials.email, password: credentials.password } });
+        return this.userRepository.findOne({attributes: ['id', 'nome', 'email', 'password'],
+            where: { email: credentials.email } });
     }
 }

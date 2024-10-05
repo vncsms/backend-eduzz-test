@@ -27,13 +27,13 @@ export class GetVolume {
             throw new UnauthorizedError();
 
         const investments = await this.cryptoTransactionRepository.listAllInvestments({accountId: account.id});
-        const retrieves = await this.cryptoTransactionRepository.listAllRetrieves({accountId: account.id});
+        const cryptoSales = await this.cryptoTransactionRepository.listAllCryptoSales({accountId: account.id});
 
         return {
             bought: investments.reduce((sum: number, element: CryptoTransactionModel): number => {
                 return sum + element.quantity
             }, 0),
-            sold: retrieves.reduce((sum: number, element: CryptoTransactionModel): number => {
+            sold: cryptoSales.reduce((sum: number, element: CryptoTransactionModel): number => {
                 return sum + element.quantity
             }, 0),
         };

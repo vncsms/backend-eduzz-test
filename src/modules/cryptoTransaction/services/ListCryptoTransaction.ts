@@ -4,6 +4,7 @@ import { UnauthorizedError } from "../../error/model/model";
 import { IRequestProvider } from "../../../shared/provider/http/IRequestProvider";
 import CryptoTransactionModel from "../model/model";
 import { ICryptoTransactionRepository } from "../repository/ICryptoTransactionRepository";
+import { CRYPTO_API_URL } from "../../../shared/utils/settings";
 
 export interface IRequest {
     userId: number,
@@ -45,7 +46,7 @@ export class ListCryptoTransaction {
         
         const total = await this.cryptoTransactionRepository.count({accountId: account?.id});
 
-        const response = await this.requestProvider.sendRequest('https://www.mercadobitcoin.net/api/BTC/ticker/');
+        const response = await this.requestProvider.sendRequest(CRYPTO_API_URL || '');
 
         const executionPriceSell = parseFloat(response.data.ticker.sell);
 

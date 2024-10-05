@@ -1,7 +1,6 @@
 import { inject, injectable } from "tsyringe";
-import { IAccountRepository } from "../../account/repository/IAccountRepository";
-import { UnauthorizedError } from "../../error/model/model";
 import { IRequestProvider } from "../../../shared/provider/http/IRequestProvider";
+import { CRYPTO_API_URL } from "../../../shared/utils/settings";
 
 export interface IRequest {
     userId: number,
@@ -20,7 +19,7 @@ export class GetExecutionPrice {
 
     public execute = async ({userId}: IRequest): Promise<IResponse> => {
 
-        const response = await this.requestProvider.sendRequest('https://www.mercadobitcoin.net/api/BTC/ticker/');
+        const response = await this.requestProvider.sendRequest(CRYPTO_API_URL || '');
 
         const executionPriceSell = parseFloat(response.data.ticker.sell);
         const executionPriceBuy = parseFloat(response.data.ticker.buy);
