@@ -21,6 +21,7 @@ export default class TransactionController {
             response.locals.status = 200;
             next();
         } catch (err) {
+            console.log(err);
             next(err);
         }
     }
