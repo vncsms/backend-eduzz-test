@@ -1,9 +1,15 @@
 import { IResponse } from "./service/GetExtract";
 import TransactionModel from "../transaction/model/model";
 import CryptoTransactionModel from "../cryptoTransaction/model/model";
+import { IResponseGetVolume } from "./service/GetVolume";
 
 interface BalanceSerializer {
     balance: number
+}
+
+interface VolumeSerializer {
+    bought: number,
+    sold: number,
 }
 
 interface ExtractSerializer {
@@ -53,6 +59,15 @@ export function extractSerializer(extract: IResponse): ExtractSerializer {
                 executionPrice: element.executionPrice
             }
         }),
+    }
+
+    return serializer;
+}
+
+export function volumeSerializer(volume: IResponseGetVolume): VolumeSerializer {
+    const serializer: VolumeSerializer = {
+        bought: volume.bought,
+        sold: volume.sold
     }
 
     return serializer;
