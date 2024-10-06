@@ -10,7 +10,7 @@ export interface IRequest {
 }
 
 @injectable()
-export class GetExecutionPrice {
+export class WriteLog {
     constructor(
         @inject("LoggerRepository") private loggerRepository: ILoggerRepository,
     ) {}
