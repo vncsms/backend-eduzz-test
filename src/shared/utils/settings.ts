@@ -7,4 +7,5 @@ export const {
     POSTGRES_USER,
     POSTGRES_PASSWORD,
     POSTGRES_DB,
+    DB_HOST,
 } = process.env;
