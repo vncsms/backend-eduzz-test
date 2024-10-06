@@ -13,12 +13,14 @@ services:
             - CRYPTO_API_URL = 'https://www.mercadobitcoin.net/api/BTC/ticker/'
             - SALT_ROUNDS = '2'
             - POSTGRES_USER=crypto
-            - POSTGRES_PASSWORD=crypto_pass
-            - POSTGRES_DB=crypto_db
+            - POSTGRES_PASSWORD=cryptopass
+            - POSTGRES_DB=cryptodb
         volumes:
             - .:/home/node/app
             - node_modules:/home/node/app/node_modules
         command: npm run dev
+        networks:
+            - app-network
         depends_on:
             - postgres
 
@@ -28,11 +30,17 @@ services:
             - '5432:5432'
         environment:
             - POSTGRES_USER=crypto
-            - POSTGRES_PASSWORD=crypto_pass
-            - POSTGRES_DB=crypto_db
+            - POSTGRES_PASSWORD=cryptopass
+            - POSTGRES_DB=cryptodb
         volumes:
             - crypto_pg_data:/bitnami/postgresql
+        networks:
+            - app-network
 
 volumes:
     crypto_pg_data:
-    node_modules:  
+    node_modules:
+
+networks:
+  app-network:
+    driver: bridge

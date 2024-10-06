@@ -18,6 +18,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.43",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
