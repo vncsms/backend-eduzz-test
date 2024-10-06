@@ -17,7 +17,7 @@ export class GetExecutionPrice {
         @inject("AxiosRequestProvider") private requestProvider: IRequestProvider,
     ) {}
 
-    public execute = async ({userId}: IRequest): Promise<IResponse> => {
+    public execute = async (): Promise<IResponse> => {
 
         const response = await this.requestProvider.sendRequest(CRYPTO_API_URL || '');
 
