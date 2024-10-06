@@ -1,8 +1,3 @@
 import { Sequelize } from "sequelize";
-import { STAGE } from "../utils/settings";
 
-export const database = new Sequelize({
-    dialect: 'sqlite',
-    storage: `./database_${STAGE}.sqlite`,
-    logging: false
-})
+export const database = new Sequelize('postgres://docker:docker@localhost:5432/polls');

@@ -19,10 +19,10 @@ export class TransactionRepository implements ITransactionRepository {
                 allowNull: false
             },
             value: {
-                type: DataType.NUMBER
+                type: DataType.DOUBLE
             },
             accountId: {
-                type: DataType.NUMBER
+                type: DataType.INTEGER
             },
             createdAt: {
                 type: DataType.DATE,
