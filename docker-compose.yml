@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+    postgres:
+        image: bitnami/postgresql:latest
+        ports:
+            - '5432:5432'
+        environment:
+            - POSTGRES_USER=crypto
+            - POSTGRES_PASSWORD=crypto_pass
+            - POSTGRES_DB=crypto_db
+        volumes:
+            - crypto_pg_data:/bitnami/postgresql
+
+volumes:
+    crypto_pg_data:

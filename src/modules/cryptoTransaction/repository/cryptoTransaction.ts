@@ -20,19 +20,19 @@ export class CryptoTransactionRepository implements ICryptoTransactionRepository
                 allowNull: false
             },
             value: {
-                type: DataType.NUMBER
+                type: DataType.DOUBLE
             },
             accountId: {
-                type: DataType.NUMBER
+                type: DataType.INTEGER
             },
             quantity: {
-                type: DataType.NUMBER
+                type: DataType.DOUBLE
             },
             executionPrice: {
-                type: DataType.NUMBER
+                type: DataType.DOUBLE
             },
             transactionType: {
-                type: DataType.NUMBER,
+                type: DataType.INTEGER,
                 defaultValue: 1,
             },
             createdAt: {
