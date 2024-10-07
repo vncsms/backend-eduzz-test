@@ -92,7 +92,7 @@ Body
 | `password` | `string` | **Required**.  |
 
 
-## All endpoints below requires bearer token from login
+## All endpoints below require bearer token from login
 
 #### Deposit money
 
