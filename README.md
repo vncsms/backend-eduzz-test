@@ -40,18 +40,23 @@ SALT_ROUNDS = '2'
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
 POSTGRES_DB=cryptodb
-DB_HOST=172.21.0.1
-SUBNET=172.21.0.0/16
+DB_HOST=localhost
 ```
 
-Git permissions to build.sh
+Install dependencies
 
 ```bash
-  chmod +x build.sh
+  npm install
 ```
 
-Execute build file
+Install postgres' docker
 
 ```bash
-  ./build.sh
+  docker compose up -d
+```
+
+Run the app
+
+```bash
+  npm run dev
 ```
