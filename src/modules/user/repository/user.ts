@@ -18,7 +18,7 @@ export class UserRepository implements IUserRepository {
                 autoIncrement: true,
                 allowNull: false
             },
-            nome: {
+            name: {
                 type: DataType.STRING
             },
             email: {
@@ -48,7 +48,7 @@ export class UserRepository implements IUserRepository {
     }
 
     public async login(credentials: ILoginnUserDTO) : Promise<UserModel | null> {
-        return this.userRepository.findOne({attributes: ['id', 'nome', 'email', 'password'],
+        return this.userRepository.findOne({attributes: ['id', 'name', 'email', 'password'],
             where: { email: credentials.email } });
     }
 }
