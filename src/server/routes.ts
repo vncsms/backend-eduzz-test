@@ -5,9 +5,9 @@ import cryptoTransactionRouter from "../modules/cryptoTransaction/router/cryptoT
 import accountRouter from "../modules/account/router/account";
 
 const routes = Router();
-routes.use('/transaction', transactionRouter);
-routes.use('/user', userRouter)
-routes.use('/cryptoTransaction', cryptoTransactionRouter);
-routes.use('/account', accountRouter);
+routes.use("/transaction", transactionRouter);
+routes.use("/user", userRouter);
+routes.use("/cryptoTransaction", cryptoTransactionRouter);
+routes.use("/account", accountRouter);
 
 export default routes;

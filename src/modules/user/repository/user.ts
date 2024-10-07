@@ -6,9 +6,8 @@ import { ILoginnUserDTO } from "./ILoginUserDTO";
 import { IUserRepository } from "./IUserRepository";
 import { DataType } from "sequelize-typescript";
 
-
 export class UserRepository implements IUserRepository {
-    private userRepository;
+  private userRepository;
 
     constructor() {
         this.userRepository = database.define<UserModel>('user_table', {
@@ -39,16 +38,26 @@ export class UserRepository implements IUserRepository {
         });
     }
 
-    public async create(userData: ICreateUserDTO): Promise<UserModel> {
-        return this.userRepository.create(userData);
-    }
+  public async create(userData: ICreateUserDTO): Promise<UserModel> {
+    return this.userRepository.create(userData);
+  }
 
-    public async get(credentials: IGetUserDTO): Promise<UserModel | null> {
-        return this.userRepository.findOne({ where: { email: credentials.email } });
-    }
+  public async get(credentials: IGetUserDTO): Promise<UserModel | null> {
+    return this.userRepository.findOne({ where: { email: credentials.email } });
+  }
 
+<<<<<<< HEAD
     public async login(credentials: ILoginnUserDTO) : Promise<UserModel | null> {
         return this.userRepository.findOne({attributes: ['id', 'name', 'email', 'password'],
             where: { email: credentials.email } });
     }
 }
+=======
+  public async login(credentials: ILoginnUserDTO): Promise<UserModel | null> {
+    return this.userRepository.findOne({
+      attributes: ["id", "nome", "email", "password"],
+      where: { email: credentials.email },
+    });
+  }
+}
+>>>>>>> origin/feature/eslint

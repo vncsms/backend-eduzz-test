@@ -22,25 +22,26 @@ export default class UserController {
             next(err);
         }
     }
+  }
 
-    public async login(request: Request, response: Response, next: NextFunction) {
-        try {
-            const validatedBody = await validateBody(loginUserValidation, request);
+  public async login(request: Request, response: Response, next: NextFunction) {
+    try {
+      const validatedBody = await validateBody(loginUserValidation, request);
 
-            const { password, email } = validatedBody;
-            const loginUser = container.resolve(LoginUser);
-            const auth = await loginUser.execute({password, email});
-            if (auth) {
-                response.locals.data = authSerializer(auth);
-                response.locals.status = 200;
-            } else {
-                throw new UnauthorizedError();
-            }
+      const { password, email } = validatedBody;
+      const loginUser = container.resolve(LoginUser);
+      const auth = await loginUser.execute({ password, email });
+      if (auth) {
+        response.locals.data = authSerializer(auth);
+        response.locals.status = 200;
+      } else {
+        throw new UnauthorizedError();
+      }
 
-            next();
-        } catch (err) {
-            console.log(err);
-            next(err);
-        }
+      next();
+    } catch (err) {
+      console.log(err);
+      next(err);
     }
+  }
 }

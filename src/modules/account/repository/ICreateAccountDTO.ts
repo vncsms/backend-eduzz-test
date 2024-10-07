@@ -1,3 +1,3 @@
 export interface ICreateAccountDTO {
-    userId: number;
+  userId: number;
 }

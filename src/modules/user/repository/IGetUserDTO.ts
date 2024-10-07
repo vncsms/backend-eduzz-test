@@ -1,3 +1,3 @@
 export interface IGetUserDTO {
-    email: string;
+  email: string;
 }

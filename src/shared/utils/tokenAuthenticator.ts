@@ -3,19 +3,14 @@ import { UnauthorizedError } from "../../modules/error/model/model";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const jwtValidation = (req: Request): JwtPayload => {
+  const bearerToken = req.headers.authorization;
+  const [, token] = bearerToken?.split(" ") || ["", ""];
 
-    var bearerToken = req.headers.authorization;
-    const [, token] = bearerToken?.split(' ') || ['',''];
+  const userData = jwt.verify(token, "secret");
 
-    const userData = jwt.verify(token, 'secret');
+  const userInfo = typeof userData != "string" ? userData : {};
 
-    const userInfo = typeof userData != 'string' ? userData : {};
+  if (!userInfo) throw new UnauthorizedError();
 
-    if (!userInfo)
-        throw new UnauthorizedError();
-
-    // const arrayToken = token?.split('.');
-    // const tokenPayload = JSON.parse(atob(arrayToken[1]));
-
-    return userInfo;
-}
+  return userInfo;
+};

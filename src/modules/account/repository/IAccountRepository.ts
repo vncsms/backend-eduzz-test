@@ -4,7 +4,7 @@ import { IGetAccountDTO } from "./IGetAccountDTO";
 import { IUpdateAccountDTO } from "./IUpdateAccountDTO";
 
 export interface IAccountRepository {
-    create(accountData: ICreateAccountDTO): Promise<AccountModel>,
-    get(userData: IGetAccountDTO): Promise<AccountModel | null>,
-    updateBalance(accountData: IUpdateAccountDTO): Promise<AccountModel>
+  create(accountData: ICreateAccountDTO): Promise<AccountModel>;
+  get(userData: IGetAccountDTO): Promise<AccountModel | null>;
+  updateBalance(accountData: IUpdateAccountDTO): Promise<AccountModel>;
 }

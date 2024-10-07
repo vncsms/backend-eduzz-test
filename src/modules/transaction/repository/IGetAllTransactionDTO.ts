@@ -1,4 +1,4 @@
 export interface IGetAllTransactionDTO {
-    id: number;
-    days: number;
+  id: number;
+  days: number;
 }
