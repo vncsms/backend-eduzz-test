@@ -133,8 +133,8 @@ Body
 Parameter
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `limit` | `number` | **Optional**. Number of transaction per page|
-| `page` | `number` | **Optional**. Offset|
+| `limit` | `number` | **Optional**.|
+| `page` | `number` | **Optional**.|
 
 #### Get balance
 
