@@ -18,11 +18,11 @@ export class AccountRepository implements IAccountRepository {
                 allowNull: false
             },
             balance: {
-                type: DataType.NUMBER,
+                type: DataType.DOUBLE,
                 defaultValue: 0,
             },
             userId: {
-                type: DataType.NUMBER
+                type: DataType.DOUBLE
             },
             createdAt: {
                 type: DataType.DATE,
