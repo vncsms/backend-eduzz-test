@@ -41,6 +41,7 @@ POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
 POSTGRES_DB=cryptodb
 DB_HOST=172.21.0.1
+SUBNET=172.21.0.0/16
 ```
 
 Git permissions to build.sh
