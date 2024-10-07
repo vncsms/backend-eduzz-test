@@ -6,7 +6,7 @@ import { BaseError } from "../../error/model/model";
 import bcrypt from 'bcrypt';
 
 export interface IRequest {
-    nome: string,
+    name: string,
     password: string,
     email: string,
 }
@@ -18,7 +18,7 @@ export class CreateUser {
         @inject("AccountRepository") private accountRepository: IAccountRepository
     ) {}
 
-    public execute = async ({nome, password, email}: IRequest): Promise<UserModel> => {
+    public execute = async ({name, password, email}: IRequest): Promise<UserModel> => {
         const findUser = await this.userRepository.get({email});
         if (findUser)
             throw new BaseError(409, 'Account already exists');
@@ -28,7 +28,7 @@ export class CreateUser {
         const hashedpass = await bcrypt.hash(password, saltRounds);
 
         // Create new user
-        const user = await this.userRepository.create({nome, password: hashedpass, email});
+        const user = await this.userRepository.create({name, password: hashedpass, email});
         const userId = user.id;
         // Create new account
         if (userId)
