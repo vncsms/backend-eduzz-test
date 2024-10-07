@@ -2,27 +2,31 @@ import CryptoTransactionModel from "./model/model";
 import { IResponse } from "./services/GetExecutionPrice";
 
 interface CryptoTransactionSerializer {
-    value: number
+  value: number;
 }
 
 interface ExecutionPriceSerializer {
-    sell: number,
-    buy: number,
+  sell: number;
+  buy: number;
 }
 
-export function cryptoTransactionSerializer(cryptoTransaction: CryptoTransactionModel): CryptoTransactionSerializer {
-    const serializer: CryptoTransactionSerializer = {
-        value: cryptoTransaction.value
-    }
+export function cryptoTransactionSerializer(
+  cryptoTransaction: CryptoTransactionModel,
+): CryptoTransactionSerializer {
+  const serializer: CryptoTransactionSerializer = {
+    value: cryptoTransaction.value,
+  };
 
-    return serializer;
+  return serializer;
 }
 
-export function executionPriceSerializer(executionPrice: IResponse): ExecutionPriceSerializer {
-    const serializer: ExecutionPriceSerializer = {
-        sell: executionPrice.sell,
-        buy: executionPrice.buy
-    }
+export function executionPriceSerializer(
+  executionPrice: IResponse,
+): ExecutionPriceSerializer {
+  const serializer: ExecutionPriceSerializer = {
+    sell: executionPrice.sell,
+    buy: executionPrice.buy,
+  };
 
-    return serializer;  
+  return serializer;
 }

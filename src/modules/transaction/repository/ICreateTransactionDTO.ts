@@ -1,4 +1,4 @@
 export interface ICreateTransactionDTO {
-    value: number;
-    accountId: number;
+  value: number;
+  accountId: number;
 }
