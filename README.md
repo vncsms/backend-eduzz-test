@@ -76,7 +76,7 @@ Body:
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `nome` | `string` | **Required**. |
+| `name` | `string` | **Required**. |
 | `email` | `string` | **Required**. |
 | `password` | `string` | **Required**.  |
 

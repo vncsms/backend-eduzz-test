@@ -1,7 +1,7 @@
 import UserModel from "./model/model";
 
 interface UserSerializer {
-    nome: string
+    name: string
     email: string
 }
 
@@ -11,7 +11,7 @@ interface AuthenticationSerializer {
 
 export function userSerializer(user: UserModel): UserSerializer {
     const serializer: UserSerializer = {
-        nome: user.nome,
+        name: user.name,
         email: user.email
     }
 

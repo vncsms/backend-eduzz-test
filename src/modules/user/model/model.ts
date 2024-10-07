@@ -3,7 +3,7 @@ import { Model, CreationOptional, InferAttributes, InferCreationAttributes } fro
 
 export default interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
     id?: number;
-    nome: string;
+    name: string;
     password: string;
     email: string;
     createdAt?: CreationOptional<Date>;

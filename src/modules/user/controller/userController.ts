@@ -12,9 +12,9 @@ export default class UserController {
     public async create(request: Request, response: Response, next: NextFunction) {
         try {
             const validatedBody = await validateBody(createUserValidation, request);
-            const { nome, password, email } = validatedBody;
+            const { name, password, email } = validatedBody;
             const createUser = container.resolve(CreateUser);
-            const user = await createUser.execute({nome, password, email});
+            const user = await createUser.execute({name, password, email});
             response.locals.data = userSerializer(user);
             response.locals.status = 200;
             next();
