@@ -8,19 +8,21 @@ import { LoginUser } from "../services/LoginUser";
 import { validateBody } from "../../../shared/utils/validation";
 
 export default class UserController {
-
-    public async create(request: Request, response: Response, next: NextFunction) {
-        try {
-            const validatedBody = await validateBody(createUserValidation, request);
-            const { name, password, email } = validatedBody;
-            const createUser = container.resolve(CreateUser);
-            const user = await createUser.execute({name, password, email});
-            response.locals.data = userSerializer(user);
-            response.locals.status = 200;
-            next();
-        } catch (err) {
-            next(err);
-        }
+  public async create(
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const validatedBody = await validateBody(createUserValidation, request);
+      const { name, password, email } = validatedBody;
+      const createUser = container.resolve(CreateUser);
+      const user = await createUser.execute({ name, password, email });
+      response.locals.data = userSerializer(user);
+      response.locals.status = 200;
+      next();
+    } catch (err) {
+      next(err);
     }
   }
 

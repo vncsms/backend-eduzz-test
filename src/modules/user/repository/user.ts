@@ -9,34 +9,34 @@ import { DataType } from "sequelize-typescript";
 export class UserRepository implements IUserRepository {
   private userRepository;
 
-    constructor() {
-        this.userRepository = database.define<UserModel>('user_table', {
-            id: {
-                type: DataType.INTEGER,
-                primaryKey: true,
-                autoIncrement: true,
-                allowNull: false
-            },
-            name: {
-                type: DataType.STRING
-            },
-            email: {
-                type: DataType.STRING,
-                unique: true,
-            },
-            password: {
-                type: DataType.STRING
-            },
-            createdAt: {
-                type: DataType.DATE,
-                allowNull: true
-            },
-            updatedAt: {
-                type: DataType.DATE,
-                allowNull: true
-            }
-        });
-    }
+  constructor() {
+    this.userRepository = database.define<UserModel>("user_table", {
+      id: {
+        type: DataType.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      name: {
+        type: DataType.STRING,
+      },
+      email: {
+        type: DataType.STRING,
+        unique: true,
+      },
+      password: {
+        type: DataType.STRING,
+      },
+      createdAt: {
+        type: DataType.DATE,
+        allowNull: true,
+      },
+      updatedAt: {
+        type: DataType.DATE,
+        allowNull: true,
+      },
+    });
+  }
 
   public async create(userData: ICreateUserDTO): Promise<UserModel> {
     return this.userRepository.create(userData);
@@ -46,18 +46,10 @@ export class UserRepository implements IUserRepository {
     return this.userRepository.findOne({ where: { email: credentials.email } });
   }
 
-<<<<<<< HEAD
-    public async login(credentials: ILoginnUserDTO) : Promise<UserModel | null> {
-        return this.userRepository.findOne({attributes: ['id', 'name', 'email', 'password'],
-            where: { email: credentials.email } });
-    }
-}
-=======
   public async login(credentials: ILoginnUserDTO): Promise<UserModel | null> {
     return this.userRepository.findOne({
-      attributes: ["id", "nome", "email", "password"],
+      attributes: ["id", "name", "email", "password"],
       where: { email: credentials.email },
     });
   }
 }
->>>>>>> origin/feature/eslint
