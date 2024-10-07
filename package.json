@@ -4,18 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/server/server.ts"
+    "dev": "ts-node-dev src/server/server.ts",
+    "lint": "eslint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.12.0",
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.8",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.7.4",
+    "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.10.0",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.8.0"
   },
   "dependencies": {
     "@sequelize/postgres": "^7.0.0-alpha.43",

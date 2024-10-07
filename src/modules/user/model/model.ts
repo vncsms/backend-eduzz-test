@@ -1,11 +1,19 @@
-import { Model, CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
+import {
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 
-
-export default interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
-    id?: number;
-    nome: string;
-    password: string;
-    email: string;
-    createdAt?: CreationOptional<Date>;
-    updatedAt?: CreationOptional<Date>;
+export default interface UserModel
+  extends Model<
+    InferAttributes<UserModel>,
+    InferCreationAttributes<UserModel>
+  > {
+  id?: number;
+  nome: string;
+  password: string;
+  email: string;
+  createdAt?: CreationOptional<Date>;
+  updatedAt?: CreationOptional<Date>;
 }

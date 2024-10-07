@@ -11,9 +11,27 @@ import { AxiosRequestProvider } from "../provider/http/AxiosRequestProvider";
 import { ILoggerRepository } from "../../modules/logger/repository/ILoggerRepository";
 import { LoggerRepository } from "../../modules/logger/repository/logger";
 
-container.registerInstance<IUserRepository>('UserRepository', new UserRepository());
-container.registerInstance<ITransactionRepository>('TransactionRepository', new TransactionRepository());
-container.registerInstance<ICryptoTransactionRepository>('CryptoTransactionRepository', new CryptoTransactionRepository());
-container.registerInstance<IAccountRepository>('AccountRepository', new AccountRepository());
-container.registerInstance<AxiosRequestProvider>('AxiosRequestProvider', new AxiosRequestProvider());
-container.registerInstance<ILoggerRepository>('LoggerRepository', new LoggerRepository());
+container.registerInstance<IUserRepository>(
+  "UserRepository",
+  new UserRepository(),
+);
+container.registerInstance<ITransactionRepository>(
+  "TransactionRepository",
+  new TransactionRepository(),
+);
+container.registerInstance<ICryptoTransactionRepository>(
+  "CryptoTransactionRepository",
+  new CryptoTransactionRepository(),
+);
+container.registerInstance<IAccountRepository>(
+  "AccountRepository",
+  new AccountRepository(),
+);
+container.registerInstance<AxiosRequestProvider>(
+  "AxiosRequestProvider",
+  new AxiosRequestProvider(),
+);
+container.registerInstance<ILoggerRepository>(
+  "LoggerRepository",
+  new LoggerRepository(),
+);

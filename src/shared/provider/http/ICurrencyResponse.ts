@@ -1,3 +1,3 @@
 export interface ICurrencyResponse {
-    data: any
+  data: any;
 }

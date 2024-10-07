@@ -4,7 +4,7 @@ import { IGetUserDTO } from "./IGetUserDTO";
 import { ILoginnUserDTO } from "./ILoginUserDTO";
 
 export interface IUserRepository {
-    create(userData: ICreateUserDTO): Promise<UserModel>,
-    login(credentials: ILoginnUserDTO): Promise<UserModel | null>
-    get(credentials: IGetUserDTO): Promise<UserModel | null>
+  create(userData: ICreateUserDTO): Promise<UserModel>;
+  login(credentials: ILoginnUserDTO): Promise<UserModel | null>;
+  get(credentials: IGetUserDTO): Promise<UserModel | null>;
 }

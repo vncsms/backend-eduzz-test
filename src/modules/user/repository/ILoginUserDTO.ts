@@ -1,3 +1,3 @@
 export interface ILoginnUserDTO {
-    email: string;
+  email: string;
 }
